@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  /*custom fonts */
+
+  /*custom colors */
+  --color-sea-light: #a0e7e5;
+  --color-sea-normal: #00b8a9;
+  --color-sea-dark: #007d75;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
