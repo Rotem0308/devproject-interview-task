@@ -12,7 +12,7 @@ const metadeta: Metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <body className="font-sans flex flex-col text-base bg-white">
+      <body className="font-sans flex flex-col text-base main-app-bg-grediant">
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />

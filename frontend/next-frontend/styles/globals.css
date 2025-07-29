@@ -2,6 +2,9 @@
 
 @theme {
   /*custom fonts */
+  --font-display: "Oswald", "sans-serif";
+  --font-satoshi: "Satoshi", "sans-serif";
+  --font-manrope: "Manrope", sans-serif; /* Friendly & clear */
 
   /*custom colors */
   --color-sea-light: #a0e7e5;
@@ -15,4 +18,12 @@ body {
   margin: 0;
   height: 100%;
   box-sizing: border-box;
+}
+
+.main-app-bg-grediant {
+  @apply bg-linear-45 from-pink-100 via-gray-50 to-yellow-100;
+}
+
+.main-app-text-grediant {
+  @apply bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent;
 }
