@@ -1,0 +1,12 @@
+# node modules 
+node_modules/
+
+# build dist folder
+dist/
+
+# environment variables
+.env
+
+# Optional IDE/editor folders
+.vscode/
+.idea/
