@@ -4,19 +4,28 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch server.js",
-    "start": "node server.js"
+    "dev": "tsx watch --clear-screen=false src/server.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Rotem Azarzar",
   "license": "ISC",
-  "description": "",
+  "description": "An Express.js template with TypeScript, ESLint and Prettier",
   "devDependencies": {
+    "@tsconfig/node22": "^22.0.2",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.1.0",
     "eslint": "^9.32.0",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0"
   }
 }
