@@ -3,7 +3,7 @@ import { JSONFilePreset } from "lowdb/node";
 import { join } from "path";
 import { Task } from "../models/task";
 
-type Data = {
+export type Data = {
   tasks: Task[];
 };
 
@@ -14,17 +14,17 @@ let dbContext: DBContext = undefined;
 const defaultData: Data = {
   tasks: [
     {
-      id: 1,
+      id: "1",
       title: "Random Task1",
       completed: false,
     },
     {
-      id: 2,
+      id: "2",
       title: "Random Task2",
       completed: true,
     },
     {
-      id: 3,
+      id: "3",
       title: "Random Task3",
       completed: false,
     },
