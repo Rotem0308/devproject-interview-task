@@ -4,14 +4,9 @@ import TaskList from "./TaskList";
 import SortDropdown from "./SortDropdown";
 import { SORT_OPTIONS } from "@/consts/sortOptions";
 import { LabelValueOrder } from "@/types/label-value-order";
+import { SearchParams } from "@/types/searchParams";
 
-const TaskBoard = ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) => {
-  // const [searchText, setSearchText] = useState<string>("");
-  // const [sortOption, setSortOption] = useState<LabelValueOrder>();
+const TaskBoard = ({ searchParams }: { searchParams: SearchParams }) => {
   console.log(searchParams);
   return (
     <section

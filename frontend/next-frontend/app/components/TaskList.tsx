@@ -5,8 +5,9 @@ import { LabelValueOrder } from "@/types/label-value-order";
 import sortMethodMapper from "@/utils/sorts";
 import { SortMethods } from "@/enums/sort";
 import apiFetch from "@/utils/http";
+import { SearchParams } from "@/types/searchParams";
 
-interface SearchParams {
+interface TaskSearchParams {
   searchText?: string;
   label?: string;
   value?: string;
@@ -16,14 +17,20 @@ interface SearchParams {
 const taskNotFoundMsg: string = "No Tasks Were Found";
 
 const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
-  const { searchText, value, order } = await searchParams;
+  const params: TaskSearchParams = await searchParams;
+  const { searchText, value, order } = params;
   let filteredAndSortedTasks: Task[] = [];
 
   const fetchData = async (): Promise<Task[]> => {
-    const res = await apiFetch();
-    const tasksFromDb: Task[] = await res.json();
-    console.log(tasksFromDb);
-    return tasksFromDb;
+    try {
+      const res = await apiFetch();
+      const tasksFromDb: Task[] = await res.json();
+      console.log(tasksFromDb);
+      return tasksFromDb;
+    } catch (error) {
+      console.log("failed to get tasks");
+      return [];
+    }
   };
 
   const tasks: Task[] = await fetchData();
