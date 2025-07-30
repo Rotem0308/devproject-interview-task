@@ -4,8 +4,6 @@ import getCollection, { generateIdForNewCollectionItem } from "../db/db.util";
 import DomainException from "../exceptions/domain.exception";
 import { StatusCodes } from "http-status-codes";
 
-const dbContext = getDbContext();
-
 export const fetchAllTasks = (): Task[] | undefined => {
   const allTasks: Task[] | undefined = getCollection("tasks");
   if (!allTasks)
@@ -35,6 +33,8 @@ export const findTaskById = (id: string): Task | undefined => {
 
 export const addTask = async (taskData: Task): Promise<Task> => {
   try {
+    const dbContext = getDbContext();
+
     const task: Task = {
       id: generateIdForNewCollectionItem("tasks"),
       title: taskData.title,
@@ -47,7 +47,6 @@ export const addTask = async (taskData: Task): Promise<Task> => {
       data.tasks.push(task);
     });
 
-    await dbContext?.write();
     return task;
   } catch (error) {
     console.error("failed to create a new task", error);
@@ -60,6 +59,8 @@ export const addTask = async (taskData: Task): Promise<Task> => {
 
 export const modifyTask = async (taskData: Task): Promise<void> => {
   try {
+    const dbContext = getDbContext();
+
     await dbContext?.update((data) => {
       let taskToUpdate = data.tasks.find((task) => task.id == taskData.id);
       if (!taskToUpdate)
@@ -69,7 +70,6 @@ export const modifyTask = async (taskData: Task): Promise<void> => {
         );
       Object.assign(taskToUpdate, taskData);
     });
-    await dbContext?.write();
   } catch (error) {
     console.error(`failed to update task with the id ${taskData.id}`, error);
     throw new DomainException(
@@ -81,16 +81,18 @@ export const modifyTask = async (taskData: Task): Promise<void> => {
 
 export const removeTask = async (id: string): Promise<void> => {
   try {
+    const dbContext = getDbContext();
+
     await dbContext?.update((data) => {
-      let taskToDelete = data.tasks.find((task) => task.id == id);
-      if (!taskToDelete)
+      console.log(data.tasks);
+      let taskToDeleteIndex = data.tasks.findIndex((task) => task.id == id);
+      if (taskToDeleteIndex < 0)
         throw new DomainException(
           `task with Id ${id} was not found`,
           StatusCodes.NOT_FOUND
         );
-      data.tasks = data.tasks.filter((task) => task.id != id);
+      data.tasks.splice(taskToDeleteIndex, 1);
     });
-    await dbContext?.write();
   } catch (error) {
     console.error(`failed to delete task with the id ${id}`, error);
     throw new DomainException(

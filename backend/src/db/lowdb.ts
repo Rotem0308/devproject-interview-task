@@ -37,7 +37,7 @@ const defaultData: Data = {
   ],
 };
 
-const filePath: string = join(process.cwd(), "db", "db.json");
+const filePath: string = join(process.cwd(), "src", "db", "db.json");
 
 export const getDbContext = (): DBContext => dbContext;
 

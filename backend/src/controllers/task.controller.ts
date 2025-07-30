@@ -77,8 +77,9 @@ export const deleteTaskById = async (
   next: NextFunction
 ) => {
   try {
-    await removeTask(req.body);
-    res.json(req.body);
+    const { id } = req.params;
+    await removeTask(id);
+    res.json();
   } catch (error) {
     if (error instanceof DomainException) {
       return res.status(error.errorReason).json(error.message);

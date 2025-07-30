@@ -11,9 +11,9 @@ import validateTaskBody from "../middlewares/task-model.validation";
 const router: Router = Router();
 
 router.get("", getAllTasks);
-router.get(":id", getTaskById);
+router.get("/:id", getTaskById);
 router.post("", validateTaskBody, createTask);
 router.put("", validateTaskBody, updateTaskById);
-router.delete(":id", deleteTaskById);
+router.delete("/:id", deleteTaskById);
 
 export default router;
