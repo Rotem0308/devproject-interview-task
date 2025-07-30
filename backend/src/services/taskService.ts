@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { getDbContext } from "../db/lowdb";
 import { Task } from "../models/task";
 import getCollection, { generateIdForNewCollectionItem } from "../db/db.util";
@@ -39,7 +38,9 @@ export const addTask = async (taskData: Task): Promise<Task> => {
     const task: Task = {
       id: generateIdForNewCollectionItem("tasks"),
       title: taskData.title,
+      description: taskData.description,
       completed: false,
+      createdDate: taskData.createdDate,
     };
 
     await dbContext?.update((data) => {

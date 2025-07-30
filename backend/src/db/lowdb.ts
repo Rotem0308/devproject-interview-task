@@ -16,17 +16,23 @@ const defaultData: Data = {
     {
       id: "1",
       title: "Random Task1",
+      description: "Super Task",
       completed: false,
+      createdDate: new Date(2025, 3, 1),
     },
     {
       id: "2",
       title: "Random Task2",
+      description: "Super Task2",
       completed: true,
+      createdDate: new Date(2022, 5, 1),
     },
     {
       id: "3",
       title: "Random Task3",
+      description: "Super Task3",
       completed: false,
+      createdDate: new Date(2021, 3, 4),
     },
   ],
 };
