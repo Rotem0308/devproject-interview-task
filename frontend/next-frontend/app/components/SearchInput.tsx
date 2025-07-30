@@ -1,15 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
 
 interface SearchProps {
-  onSearch: Function;
   placeholder?: string;
   className?: string;
 }
-const SearchInput = ({ onSearch, placeholder, className }: SearchProps) => {
+const SearchInput = ({ placeholder, className }: SearchProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    onSearch(value);
+
+    const params = new URLSearchParams();
+    params.set("searchText", value);
+
+    router.push(`?${params.toString()}`);
   };
   return (
     <>

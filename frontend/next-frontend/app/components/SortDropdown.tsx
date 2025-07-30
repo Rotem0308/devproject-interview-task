@@ -1,22 +1,31 @@
+"use client";
 import { LabelValueOrder } from "@/types/label-value-order";
-import React, { ChangeEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { ChangeEvent, useState } from "react";
 
 interface SelectProps {
-  onSelect: Function;
   options: LabelValueOrder[];
   selectClassName?: string;
   optionClassName?: string;
 }
 const SortDropdown = ({
-  onSelect,
   options,
   selectClassName,
   optionClassName,
 }: SelectProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const handleSelect = (event: ChangeEvent<HTMLSelectElement>): void => {
-    const value = Number(event.target.value);
-    console.log(options[value]);
-    onSelect({ ...options[value] });
+    const { label, value, order } = options[Number(event.target.value)];
+    const params = new URLSearchParams(searchParams);
+
+    params.set("label", label);
+    params.set("value", value.toString());
+    params.set("order", order);
+
+    router.push(`?${params.toString()}`);
+    // onSelect({ ...options[value] });
   };
 
   return (

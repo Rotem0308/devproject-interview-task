@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Metadata } from "next";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import Footer from "@/app/components/Footer";
+import Navbar from "@/app/components/Navbar";
 import "@/styles/globals.css";
 
 const metadeta: Metadata = {

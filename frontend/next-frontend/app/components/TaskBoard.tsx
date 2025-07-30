@@ -1,14 +1,18 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import SearchInput from "./SearchInput";
 import TaskList from "./TaskList";
 import SortDropdown from "./SortDropdown";
 import { SORT_OPTIONS } from "@/consts/sortOptions";
 import { LabelValueOrder } from "@/types/label-value-order";
 
-const TaskBoard = () => {
-  const [searchText, setSearchText] = useState<string>("");
-  const [sortOption, setSortOption] = useState<LabelValueOrder>();
+const TaskBoard = ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  // const [searchText, setSearchText] = useState<string>("");
+  // const [sortOption, setSortOption] = useState<LabelValueOrder>();
+  console.log(searchParams);
   return (
     <section
       className="
@@ -22,10 +26,10 @@ const TaskBoard = () => {
       sm:flex-row
       "
       >
-        <SortDropdown onSelect={setSortOption} options={SORT_OPTIONS} />
-        <SearchInput onSearch={setSearchText} />
+        <SortDropdown options={SORT_OPTIONS} />
+        <SearchInput />
       </div>
-      <TaskList searchText={searchText} sortOption={sortOption} />
+      <TaskList searchParams={searchParams} />
     </section>
   );
 };
