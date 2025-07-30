@@ -34,8 +34,6 @@ export function sortByName<T>(
   return items.sort((a, b) => {
     const nameA: string = String(a[key]);
     const nameB: string = String(b[key]);
-    console.log(nameA);
-    console.log(nameB);
     return sortOrder === "asc"
       ? nameA.localeCompare(nameB)
       : nameB.localeCompare(nameA);

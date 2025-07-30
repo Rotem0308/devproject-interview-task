@@ -9,7 +9,20 @@ const Navbar = () => {
         <Turtle color="lightgreen" size={34} />
         <p>Turtask</p>
       </div>
-      <Link href={"/"}>Home</Link>
+      <div className="flex items-center gap-6">
+        <Link
+          href={"/"}
+          className="outline-1 p-2 rounded-md hover:bg-orange-300 hover:outline-0 transition-all duration-100"
+        >
+          Home
+        </Link>
+        <Link
+          href={"/tasks/create"}
+          className="outline-1 p-2 rounded-md hover:bg-orange-300 hover:outline-0 transition-all duration-100"
+        >
+          New
+        </Link>
+      </div>
     </div>
   );
 };

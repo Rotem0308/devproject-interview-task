@@ -13,6 +13,7 @@ const app: Application = express();
 
 const corsConfiguration: CorsOptions = {
   origin: [envConfig.ALLOWED_CORS_ORIGIN],
+  methods: ["GET", "DELETE", "POST", "PUT"],
 };
 
 app.use(cors(corsConfiguration));

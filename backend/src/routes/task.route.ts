@@ -6,14 +6,17 @@ import {
   getTaskById,
   updateTaskById,
 } from "../controllers/task.controller";
-import validateTaskBody from "../middlewares/task-model.validation";
+import {
+  validateCreateTaskBody,
+  validateUpdateTaskBody,
+} from "../middlewares/task-model.validation";
 
 const router: Router = Router();
 
 router.get("", getAllTasks);
 router.get("/:id", getTaskById);
-router.post("", validateTaskBody, createTask);
-router.put("", validateTaskBody, updateTaskById);
+router.post("", validateCreateTaskBody, createTask);
+router.put("/:id", validateUpdateTaskBody, updateTaskById);
 router.delete("/:id", deleteTaskById);
 
 export default router;

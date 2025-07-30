@@ -13,7 +13,7 @@ const TaskCard = ({ task }: TaskProps) => {
   return (
     <div className="flex flex-col gap-5 p-6 px-8 border-1 border-gray-400 rounded-sm shadow-lg  w-auto">
       <div className="flex justify-between items-center">
-        <p>{task.title}</p>
+        <p className="truncate w-[80%]">{task.title}</p>
         <RemoveFromTasks taskId={task.id} />
       </div>
       <div className="flex justify-between items-center gap-5">
@@ -26,12 +26,20 @@ const TaskCard = ({ task }: TaskProps) => {
           )}
         </p>
       </div>
-      <Link
-        href={`/tasks/${task.id}`}
-        className="w-fit p-2 rounded-sm hover:rounded-md bg-blue-300 hover:bg-blue-400 shadow-md transition-colors transition-normal duration-500"
-      >
-        Info
-      </Link>
+      <div className="flex justify-evenly">
+        <Link
+          href={`/tasks/${task.id}`}
+          className="w-fit p-2 rounded-sm hover:rounded-md bg-blue-300 hover:bg-blue-400 shadow-md transition-colors transition-normal duration-500"
+        >
+          Info
+        </Link>
+        <Link
+          href={`/tasks/edit/${task.id}`}
+          className="w-fit p-2 rounded-sm hover:rounded-md bg-purple-200 hover:bg-purple-300 shadow-md transition-colors transition-normal duration-500"
+        >
+          Edit
+        </Link>
+      </div>
     </div>
   );
 };

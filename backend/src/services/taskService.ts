@@ -84,7 +84,6 @@ export const removeTask = async (id: string): Promise<void> => {
     const dbContext = getDbContext();
 
     await dbContext?.update((data) => {
-      console.log(data.tasks);
       let taskToDeleteIndex = data.tasks.findIndex((task) => task.id == id);
       if (taskToDeleteIndex < 0)
         throw new DomainException(

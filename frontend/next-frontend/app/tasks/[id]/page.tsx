@@ -30,4 +30,30 @@ const TaskInfo = async ({ params }: { params: { id: string } }) => {
   }
 };
 
+// const TaskInfo1 = ({ task }: { task: Task }) => {
+//   if (!task) return <div>Task Was Not Found</div>;
+
+//   return (
+//     <div className="flex flex-col justify-center items-center h-full">
+//       <p>{task.title}</p>
+//       <p>{task.description}</p>
+//       <p>{task.completed ? "Task Complete" : "Task In Progress"}</p>
+//       <p>{task.createdDate}</p>
+//     </div>
+//   );
+// }
+
+// export async function getServerSideProps(context: { params: { id: string } }) {
+//   const { id } = context.params;
+//   try {
+//     const res = await apiFetch(`${id}`);
+//     if (!res.ok) {
+//       return { props: { task: null } };
+//     }
+//     const task = await res.json();
+//     return { props: { task } };
+//   } catch {
+//     return { props: { task: null } };
+//   }
+// }
 export default TaskInfo;

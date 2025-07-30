@@ -26,7 +26,6 @@ const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
         cache: "no-store",
       });
       const tasksFromDb: Task[] = await res.json();
-      console.log(tasksFromDb);
       return tasksFromDb;
     } catch (error) {
       console.log("failed to get tasks");
@@ -37,7 +36,6 @@ const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
 
   const tasks: Task[] = await fetchData();
 
-  console.log(tasks);
   if (searchParams != undefined) {
     filteredAndSortedTasks = generateSortedFilteredTasks(tasks);
   }
@@ -46,7 +44,7 @@ const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
     <div
       className="
       grid gap-2 w-full 
-      sm:grid-cols-1 sm:w-[90%] md:grid-cols-2 
+      sm:grid-cols-1 sm:w-[90%] md:grid-cols-2  lg:grid-cols-3
       "
     >
       {filteredAndSortedTasks.length > 0 ? (

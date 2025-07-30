@@ -10,7 +10,7 @@ const TaskBoard = ({ searchParams }: { searchParams: SearchParams }) => {
   return (
     <section
       className="
-    flex flex-col items-center w-full gap-3
+    flex flex-col items-center w-full gap-15
     sm:w-[80%] 
     "
     >
