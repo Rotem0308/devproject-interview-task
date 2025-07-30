@@ -21,9 +21,13 @@ body {
 }
 
 .main-app-bg-grediant {
-  @apply bg-linear-45 from-pink-100 via-gray-50 to-yellow-100;
+  @apply bg-yellow-50 md:bg-linear-45 md:from-pink-100 md:via-gray-100 md:to-yellow-100;
 }
 
 .main-app-text-grediant {
   @apply bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent;
+}
+
+.search-input {
+  @apply w-full max-w-md px-4 py-2 text-sm text-gray-800 placeholder-gray-400 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none;
 }

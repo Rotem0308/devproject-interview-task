@@ -1,4 +1,4 @@
-import TaskCard from "@/components/TaskCard";
+import TaskBoard from "@/components/TaskBoard";
 import React from "react";
 
 const Home = () => {
@@ -10,7 +10,7 @@ const Home = () => {
           start mastering your tasks now.
         </span>
       </div>
-      <TaskCard />
+      <TaskBoard />
     </div>
   );
 };
