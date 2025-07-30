@@ -27,7 +27,7 @@ const TaskCard = ({ task }: TaskProps) => {
         </p>
       </div>
       <Link
-        href={""}
+        href={`/tasks/${task.id}`}
         className="w-fit p-2 rounded-sm hover:rounded-md bg-blue-300 hover:bg-blue-400 shadow-md transition-colors transition-normal duration-500"
       >
         Info

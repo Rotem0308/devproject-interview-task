@@ -7,7 +7,6 @@ import { LabelValueOrder } from "@/types/label-value-order";
 import { SearchParams } from "@/types/searchParams";
 
 const TaskBoard = ({ searchParams }: { searchParams: SearchParams }) => {
-  console.log(searchParams);
   return (
     <section
       className="
