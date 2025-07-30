@@ -19,11 +19,12 @@ const taskNotFoundMsg: string = "No Tasks Were Found";
 const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
   const params: TaskSearchParams = await searchParams;
   const { searchText, value, order } = params;
-  let filteredAndSortedTasks: Task[] = [];
 
   const fetchData = async (): Promise<Task[]> => {
     try {
-      const res = await apiFetch();
+      const res = await apiFetch("", {
+        cache: "no-store",
+      });
       const tasksFromDb: Task[] = await res.json();
       console.log(tasksFromDb);
       return tasksFromDb;
@@ -32,11 +33,13 @@ const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
       return [];
     }
   };
+  let filteredAndSortedTasks: Task[] = [];
 
   const tasks: Task[] = await fetchData();
 
+  console.log(tasks);
   if (searchParams != undefined) {
-    filteredAndSortedTasks = generateSortedFilteredTasks();
+    filteredAndSortedTasks = generateSortedFilteredTasks(tasks);
   }
 
   return (
@@ -56,8 +59,8 @@ const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
     </div>
   );
 
-  function generateSortedFilteredTasks(): Task[] {
-    let filteredTasks: Task[] = [];
+  function generateSortedFilteredTasks(tasks: Task[]): Task[] {
+    let filteredTasks: Task[] = tasks;
     if (searchText != undefined) {
       filteredTasks = tasks.filter((task) =>
         task.title.toLowerCase().includes(searchText.toLowerCase())
