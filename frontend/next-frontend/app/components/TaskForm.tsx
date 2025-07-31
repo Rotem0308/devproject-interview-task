@@ -79,7 +79,7 @@ const TaskForm = ({ taskId }: { taskId?: string | undefined }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center shadow-2xl bg-cover bg-center w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] h-[80%] bg-[url(/updateForm-bg.jfif)]">
+    <div className="flex flex-col py-4 justify-evenly items-center shadow-2xl bg-cover bg-center w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] min-h-[80%] bg-[url(/updateForm-bg.jfif)]">
       {!loading ? (
         <>
           {serverError && <p className="error">{serverError}</p>}

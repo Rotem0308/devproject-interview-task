@@ -25,7 +25,6 @@ export async function apiFetch(
 
     return response;
   } catch (err) {
-    console.error("API fetch error:", err);
     throw err; // Let the caller decide what to do
   }
 }

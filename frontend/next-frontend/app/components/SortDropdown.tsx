@@ -17,6 +17,8 @@ const SortDropdown = ({
   const searchParams = useSearchParams();
 
   const handleSelect = (event: ChangeEvent<HTMLSelectElement>): void => {
+    if (event.target.value == "default") return;
+
     const { label, value, order } = options[Number(event.target.value)];
     const params = new URLSearchParams(searchParams);
 
@@ -25,7 +27,6 @@ const SortDropdown = ({
     params.set("order", order);
 
     router.push(`?${params.toString()}`);
-    // onSelect({ ...options[value] });
   };
 
   return (
@@ -34,21 +35,20 @@ const SortDropdown = ({
         className={selectClassName || "cursor-pointer outline-0"}
         onChange={handleSelect}
       >
-        <option value="" disabled>
-          SortBy
-        </option>
-        {options.map((sortOption, index) => (
-          <option
-            className={
-              optionClassName ||
-              "focus:ring-2 focus:ring-sea-normal focus:border-sea-normal px-4 py-2 pr-8"
-            }
-            key={index}
-            value={index}
-          >
-            {sortOption.label}
-          </option>
-        ))}
+        <option value="default">SortBy</option>
+        <optgroup label="Sorting Options">
+          {options.map((sortOption, index) => (
+            <option
+              className={
+                optionClassName || "focus:border-sea-normal px-4 py-2 pr-8"
+              }
+              key={index}
+              value={index}
+            >
+              {sortOption.label}
+            </option>
+          ))}
+        </optgroup>
       </select>
     </div>
   );

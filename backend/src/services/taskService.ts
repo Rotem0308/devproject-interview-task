@@ -7,7 +7,6 @@ import { StatusCodes } from "http-status-codes";
 export const fetchAllTasks = (): Task[] | undefined => {
   const allTasks: Task[] | undefined = getCollection("tasks");
   if (!allTasks || allTasks.length <= 0) {
-    console.log("got here");
     throw new DomainException(
       "The task list is currently empty",
       StatusCodes.BAD_REQUEST
@@ -40,7 +39,7 @@ export const addTask = async (taskData: Task): Promise<Task> => {
       completed: false,
       createdDate: taskData.createdDate,
     };
-    console.log(task.id);
+
     await dbContext?.update((data) => {
       data.tasks.push(task);
     });

@@ -5,10 +5,9 @@ import React from "react";
 const TaskInfo = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
   let task: Task | null = null;
-  const errorClass =
-    "flex justify-center items-center text-6xl h-full w-full text-red-400";
+
   try {
-    const res = await apiFetch(`${10}`, {
+    const res = await apiFetch(`${id}`, {
       cache: "no-store", // will be updated
     });
 
