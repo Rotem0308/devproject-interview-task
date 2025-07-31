@@ -4,12 +4,20 @@ import { createTask, getTask, updateTask } from "@/utils/http";
 import { CircleX } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Modal from "./Modal";
+import { ModalState } from "@/types/modal";
 
 type FormValues = CreateTaskDto | Task;
 
 const TaskForm = ({ taskId }: { taskId?: string | undefined }) => {
   const editMode = taskId != undefined;
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState<ModalState>({
+    isActive: false,
+    type: "success",
+    message: "",
+  });
+  const [serverError, setServerError] = useState("");
 
   const {
     register,
@@ -51,16 +59,30 @@ const TaskForm = ({ taskId }: { taskId?: string | undefined }) => {
   }, [taskId, reset]);
 
   const onSubmit = async (data: Task | CreateTaskDto) => {
-    editMode
-      ? await updateTask(data as Task)
-      : await createTask(data as CreateTaskDto);
-    !editMode && reset();
+    try {
+      editMode
+        ? await updateTask(data as Task)
+        : await createTask(data as CreateTaskDto);
+      !editMode && reset();
+      setModal((prev) => {
+        return {
+          ...prev,
+          message: `${editMode ? "Updated" : "Created"} Successfully!`,
+          isActive: true,
+        };
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        setServerError(error.message);
+      }
+    }
   };
 
   return (
     <div className="flex flex-col justify-center items-center shadow-2xl bg-cover bg-center w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] h-[80%] bg-[url(/updateForm-bg.jfif)]">
       {!loading ? (
         <>
+          {serverError && <p className="error">{serverError}</p>}
           <p className="py-5 text-4xl font-bold text-white select-none">
             {editMode ? "Update" : "Create"} Task
           </p>
@@ -153,7 +175,20 @@ const TaskForm = ({ taskId }: { taskId?: string | undefined }) => {
           </form>
         </>
       ) : (
-        <p className="text-3xl text-white">Loading...</p>
+        <p className="text-3xl text-white text-shadow-md text-shadow-amber-700">
+          Loading...
+        </p>
+      )}
+      {modal.isActive && (
+        <Modal
+          message={modal.message}
+          type="success"
+          onClose={() =>
+            setModal((prev) => {
+              return { ...prev, isActive: false };
+            })
+          }
+        />
       )}
     </div>
   );

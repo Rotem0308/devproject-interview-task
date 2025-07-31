@@ -4,30 +4,51 @@ import React from "react";
 
 const TaskInfo = async ({ params }: { params: { id: string } }) => {
   const { id } = await params;
+  let task: Task | null = null;
   const errorClass =
     "flex justify-center items-center text-6xl h-full w-full text-red-400";
   try {
-    const res = await apiFetch(`${id}`, {
+    const res = await apiFetch(`${10}`, {
       cache: "no-store", // will be updated
     });
-    if (!res.ok) {
-      return <div className={errorClass}>Task Was Not Found</div>;
-    }
-    const task: Task = await res.json();
 
-    return (
-      <div className="flex flex-col justify-center items-center h-full">
-        <p>{task.title}</p>
-        <p>{task.description}</p>
-        <p>{task.completed ? "Task Complete" : "Task In Progress"}</p>
-        <p>{task.createdDate}</p>
-      </div>
-    );
+    const hasBodyContent =
+      res.headers.get("content-length") &&
+      res.headers.get("content-length") != "0";
+
+    if (!res.ok || !hasBodyContent) {
+      const errorData = hasBodyContent && (await res.json());
+      return <p className="error">{errorData?.message || res.statusText}</p>;
+    }
+    task = await res.json();
   } catch (error) {
-    return (
-      <div className={errorClass}>Error While Fetching Data From Server</div>
-    );
+    if (error instanceof Error) {
+      return <p className="error">{error.message}</p>;
+    }
   }
+
+  if (!task) {
+    return <p className="error">The requested Task was not found</p>;
+  }
+
+  return (
+    <div className="flex flex-col justify-center items-center h-full px-4">
+      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md text-center space-y-4">
+        <h1 className="text-2xl font-bold text-gray-800">{task.title}</h1>
+        <p className="text-gray-600">{task.description}</p>
+        <p
+          className={`font-medium ${
+            task.completed ? "text-green-600" : "text-yellow-600"
+          }`}
+        >
+          {task.completed ? "Task Complete" : "Task In Progress"}
+        </p>
+        <p className="text-sm text-gray-400">
+          Created at: {new Date(task.createdDate).toLocaleString()}
+        </p>
+      </div>
+    </div>
+  );
 };
 
 // const TaskInfo1 = ({ task }: { task: Task }) => {

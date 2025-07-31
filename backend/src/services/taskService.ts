@@ -6,23 +6,21 @@ import { StatusCodes } from "http-status-codes";
 
 export const fetchAllTasks = (): Task[] | undefined => {
   const allTasks: Task[] | undefined = getCollection("tasks");
-  if (!allTasks)
+  if (!allTasks || allTasks.length <= 0) {
+    console.log("got here");
     throw new DomainException(
-      "no tasks in the tasks collection in DB",
-      StatusCodes.NO_CONTENT
+      "The task list is currently empty",
+      StatusCodes.BAD_REQUEST
     );
+  }
+
   return allTasks;
 };
 
 export const findTaskById = (id: string): Task | undefined => {
-  const allTasks: Task[] | undefined = getCollection("tasks");
-  if (!allTasks)
-    throw new DomainException(
-      "no tasks in the tasks collection in DB",
-      StatusCodes.NO_CONTENT
-    );
+  const allTasks: Task[] | undefined = fetchAllTasks();
 
-  const task = allTasks.find((task) => task.id == id);
+  const task = allTasks?.find((task) => task.id == id);
   if (!task)
     throw new DomainException(
       "no tasks in the tasks collection in DB",
@@ -42,7 +40,7 @@ export const addTask = async (taskData: Task): Promise<Task> => {
       completed: false,
       createdDate: taskData.createdDate,
     };
-
+    console.log(task.id);
     await dbContext?.update((data) => {
       data.tasks.push(task);
     });

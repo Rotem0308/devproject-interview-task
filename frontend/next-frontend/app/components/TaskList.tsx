@@ -14,30 +14,46 @@ interface TaskSearchParams {
   order?: string;
 }
 
-const taskNotFoundMsg: string = "No Tasks Were Found";
+const taskNotFoundMsg: string = "No results match the entered value";
 
 const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
   const params: TaskSearchParams = await searchParams;
   const { searchText, value, order } = params;
 
-  const fetchData = async (): Promise<Task[]> => {
-    try {
-      const res = await apiFetch("", {
-        cache: "no-store",
-      });
-      const tasksFromDb: Task[] = await res.json();
-      return tasksFromDb;
-    } catch (error) {
-      console.log("failed to get tasks");
-      return [];
-    }
-  };
-  let filteredAndSortedTasks: Task[] = [];
+  let tasks: Task[] = [];
 
-  const tasks: Task[] = await fetchData();
+  try {
+    const res = await apiFetch("", {
+      cache: "no-store",
+    });
+    const hasBodyContent =
+      res.headers.get("content-length") &&
+      res.headers.get("content-length") != "0";
+
+    if (!res.ok || !hasBodyContent) {
+      const errorData = hasBodyContent && (await res.json());
+      return <p className="error">{errorData?.message || res.statusText}</p>;
+    }
+
+    tasks = await res.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      return <p className="error">{error.message}</p>;
+    }
+  }
+
+  let filteredAndSortedTasks: Task[] = [];
 
   if (searchParams != undefined) {
     filteredAndSortedTasks = generateSortedFilteredTasks(tasks);
+  }
+
+  if (filteredAndSortedTasks.length <= 0) {
+    return (
+      <p className="flex justify-center items-center text-3xl">
+        {taskNotFoundMsg}
+      </p>
+    );
   }
 
   return (
@@ -47,13 +63,9 @@ const TaskList = async ({ searchParams }: { searchParams: SearchParams }) => {
       sm:grid-cols-1 sm:w-[90%] md:grid-cols-2  lg:grid-cols-3
       "
     >
-      {filteredAndSortedTasks.length > 0 ? (
-        filteredAndSortedTasks.map((task) => {
-          return <TaskCard key={task.id} task={task} />;
-        })
-      ) : (
-        <span>{taskNotFoundMsg}</span>
-      )}
+      {filteredAndSortedTasks.map((task) => {
+        return <TaskCard key={task.id} task={task} />;
+      })}
     </div>
   );
 

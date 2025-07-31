@@ -16,7 +16,8 @@ export const getAllTasks = (_: Request, res: Response, next: NextFunction) => {
     res.json(allTasks);
   } catch (error) {
     if (error instanceof DomainException) {
-      return res.status(error.errorReason).json(error.message);
+      console.log(error);
+      return res.status(error.errorReason).json({ message: error.message });
     }
     next(error);
   }

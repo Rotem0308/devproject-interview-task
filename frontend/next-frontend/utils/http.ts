@@ -7,13 +7,29 @@ export async function apiFetch(
   path: string = "",
   options?: RequestInit
 ): Promise<Response> {
-  return fetch(`${BASE_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch(`${BASE_URL}${path}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options?.headers || {}),
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || `Error While Fetching Without A Message`
+      );
+    }
+
+    return response;
+  } catch (err) {
+    console.error("API fetch error:", err);
+    throw err; // Let the caller decide what to do
+  }
 }
+
 export default apiFetch;
 
 export async function getTask(taskId: string): Promise<Response> {

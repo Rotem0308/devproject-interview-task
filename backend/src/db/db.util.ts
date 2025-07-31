@@ -7,12 +7,17 @@ const getCollection = (collectionName: keyof Data) => {
 export const generateIdForNewCollectionItem = (
   collectionName: keyof Data
 ): string => {
-  const itemsIdsInCollection = getDbContext()?.data?.[collectionName].map(
-    (item) => Number(item.id)
-  );
-  return !itemsIdsInCollection
-    ? "1"
-    : (Math.max(...itemsIdsInCollection) + 1).toString();
+  const collection = getCollection(collectionName);
+
+  const itemsIdsInCollection = collection
+    ?.map((item) => Number(item.id))
+    .filter((id) => !isNaN(id));
+
+  if (!itemsIdsInCollection || itemsIdsInCollection.length == 0) {
+    return "1";
+  }
+
+  return (Math.max(...itemsIdsInCollection) + 1).toString();
 };
 
 export default getCollection;
